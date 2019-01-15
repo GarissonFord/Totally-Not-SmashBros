@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -17,14 +18,17 @@ public class PlayerController : MonoBehaviour
     public float fallMultiplier;
     public float lowJumpMultiplier;
 
-    public GameObject hitbox;
+    public GameObject forwardHitbox;
+    public GameObject upHitbox;
+
+    public Text hitPointsText;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        hitbox.SetActive(false);
         hitPoints = 0.0f;
+        UpdateHitPoints();
     }
 
     // Update is called once per frame
@@ -60,9 +64,14 @@ public class PlayerController : MonoBehaviour
             Flip();
 
         if(Input.GetButtonDown("Attack"))        
-            hitbox.SetActive(true);        
+            forwardHitbox.SetActive(true);        
         else
-            hitbox.SetActive(false);
+            forwardHitbox.SetActive(false);
+
+        if (Input.GetButtonDown("Attack2"))
+            upHitbox.SetActive(true);
+        else
+            upHitbox.SetActive(false);
     }
 
     public void TakeDamage(float damage)
@@ -77,5 +86,10 @@ public class PlayerController : MonoBehaviour
         Quaternion theScale = transform.localRotation;
         theScale.y *= -1;
         transform.localRotation = theScale;
+    }
+
+    void UpdateHitPoints()
+    {
+        hitPointsText.text = hitPoints.ToString() + "%";
     }
 }

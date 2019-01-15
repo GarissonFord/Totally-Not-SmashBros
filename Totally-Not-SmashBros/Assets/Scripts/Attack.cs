@@ -11,8 +11,9 @@ public class Attack : MonoBehaviour
     {
         if(other.gameObject.CompareTag("Fighter"))
         {
-            other.attachedRigidbody.AddRelativeForce(-transform.forward * damage * knockback);
-            //other.SendMessageUpwards("TakeDamage", damage);
+            EnemyController ec = other.GetComponent<EnemyController>();
+            other.attachedRigidbody.AddRelativeForce(-transform.forward * ec.hitPoints * knockback);
+            other.SendMessageUpwards("TakeDamage", damage);
         }
     }
 }
