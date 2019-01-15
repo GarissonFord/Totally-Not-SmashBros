@@ -6,7 +6,7 @@ public class Boundary : MonoBehaviour
 {
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Fighter"))
+        if (other.CompareTag("Fighter") || other.CompareTag("Player"))
             Destroy(other.gameObject);
     }
 }
