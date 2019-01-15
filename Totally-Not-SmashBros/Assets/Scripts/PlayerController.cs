@@ -6,6 +6,8 @@ public class PlayerController : MonoBehaviour
 {
     Rigidbody rb;
 
+    public float hitPoints;
+
     public float h, moveSpeed;
     public float jumpForce;
 
@@ -15,10 +17,14 @@ public class PlayerController : MonoBehaviour
     public float fallMultiplier;
     public float lowJumpMultiplier;
 
+    public GameObject hitbox;
+
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        hitbox.SetActive(false);
+        hitPoints = 0.0f;
     }
 
     // Update is called once per frame
@@ -52,14 +58,24 @@ public class PlayerController : MonoBehaviour
         //Flips when hitting 'left' and facing right
         else if (h < 0 && facingRight)
             Flip();
+
+        if(Input.GetButtonDown("Attack"))        
+            hitbox.SetActive(true);        
+        else
+            hitbox.SetActive(false);
+    }
+
+    public void TakeDamage(float damage)
+    {
+        hitPoints += damage;
     }
 
     //Changes rotation of the player
     void Flip()
     {
         facingRight = !facingRight;
-        Vector3 theScale = transform.localScale;
-        theScale.x *= -1;
-        transform.localScale = theScale;
+        Quaternion theScale = transform.localRotation;
+        theScale.y *= -1;
+        transform.localRotation = theScale;
     }
 }
