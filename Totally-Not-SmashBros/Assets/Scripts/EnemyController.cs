@@ -8,9 +8,12 @@ public class EnemyController : MonoBehaviour
     public float hitPoints;
     public Text hitPointsText;
 
+    public CreateNewPlatform parent;
+
     private void Start()
     {
         UpdateHitPoints();
+        parent = transform.parent.GetComponent<CreateNewPlatform>();
     }
 
     public void TakeDamage(float damage)
@@ -22,5 +25,11 @@ public class EnemyController : MonoBehaviour
     void UpdateHitPoints()
     {
         hitPointsText.text = hitPoints.ToString() + "%";
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Boundary"))
+            parent.spawnPlatform();
     }
 }

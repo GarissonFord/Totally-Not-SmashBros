@@ -5,11 +5,16 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
+    //Component references
     Rigidbody rb;
 
     public float hitPoints;
 
-    public float h, moveSpeed;
+    public float h;
+    //Container variable
+    public float moveSpeed;
+    //Two speeds dependent on if the input is being tilted to move slightly forward or 'smashed' to dash around
+    public float tiltMoveSpeed, smashMoveSpeed;
     public float jumpForce;
 
     public bool facingRight = true;
@@ -38,7 +43,21 @@ public class PlayerController : MonoBehaviour
 
         //The player is moving if h isn't 0, so we set to a static velocity
         if (h != 0)
+        {
+            /*
+            if(h <= 0.15f && h >= -0.15)
+            {
+                moveSpeed = tiltMoveSpeed;
+            }
+
+            if(h < -0.15 || h > 0.15)
+            {
+                moveSpeed = smashMoveSpeed;
+            }
+            */
+
             rb.velocity = new Vector2(h * moveSpeed, rb.velocity.y);
+        }
 
         if (Input.GetButtonDown("Jump"))
         {
